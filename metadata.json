@@ -1,0 +1,6 @@
+{
+  "name": "72º Encontro de Casais — Ministério Famílias Integradas",
+  "description": "Landing page oficial e formulário de inscrição para o 72º Encontro de Casais da Igreja Nova Vida de Alcântara no Casarão Terra Santa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
