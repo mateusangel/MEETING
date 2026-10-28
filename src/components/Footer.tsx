@@ -101,7 +101,7 @@ export const Footer: React.FC = () => {
                   href="#investimento"
                   className="hover:text-[#E5C07B] transition-colors"
                 >
-                  Valores e 1º Lote
+                  Benefícios da Vaga
                 </a>
               </li>
               <li>
@@ -114,12 +114,10 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href={EVENT_DETAILS.paymentUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#inscricao"
                   className="hover:text-[#E5C07B] transition-colors"
                 >
-                  Sacola Oficial PagBank
+                  Ficha de Inscrição Oficial
                 </a>
               </li>
               <li>

@@ -22,7 +22,7 @@ export const FAQSection: React.FC = () => {
           </h2>
           <p className="text-sm sm:text-base text-slate-400 font-light">
             Encontre respostas rápidas para as principais dúvidas sobre hospedagem, alimentação,
-            valores e dinâmica do encontro.
+            programação e dinâmica do encontro.
           </p>
         </div>
 

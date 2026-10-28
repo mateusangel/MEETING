@@ -30,7 +30,6 @@ export default function App() {
       {/* Top Header */}
       <Header
         onOpenForm={scrollToRegistration}
-        onOpenAdmin={() => setAdminModalOpen(true)}
       />
 
       <main className="flex-grow">

@@ -4,10 +4,9 @@ import { Menu, X, ArrowRight } from 'lucide-react';
 
 interface HeaderProps {
   onOpenForm: () => void;
-  onOpenAdmin: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenForm, onOpenAdmin }) => {
+export const Header: React.FC<HeaderProps> = ({ onOpenForm }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -24,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenForm, onOpenAdmin }) => {
     { label: 'Experiência', href: '#experiencia' },
     { label: 'O Local', href: '#local' },
     { label: 'Galeria', href: '#galeria' },
-    { label: 'Investimento', href: '#investimento' },
+    { label: 'Benefícios', href: '#investimento' },
     { label: 'Dúvidas', href: '#duvidas' },
   ];
 
@@ -94,16 +93,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenForm, onOpenAdmin }) => {
             ))}
           </nav>
 
-          {/* Zone 3: 1 Primary CTA Button + Quick Admin view */}
+          {/* Zone 3: 1 Primary CTA Button */}
           <div className="flex items-center gap-3 shrink-0">
-            <button
-              onClick={onOpenAdmin}
-              title="Consultar Inscrições Registradas"
-              className="hidden sm:inline-flex text-xs text-slate-400 hover:text-slate-200 px-2 py-1.5 rounded transition-colors"
-            >
-              Minhas Inscrições
-            </button>
-
             <button
               onClick={onOpenForm}
               className="px-5 py-2.5 text-xs sm:text-sm font-semibold text-black bg-gradient-to-r from-[#F3E5AB] via-[#E5C07B] to-[#C59F49] hover:from-white hover:to-[#E5C07B] rounded-lg transition-all duration-200 shadow-md shadow-[#C59F49]/20 hover:shadow-lg hover:shadow-[#C59F49]/30 active:scale-95 whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer"
@@ -142,18 +133,9 @@ export const Header: React.FC<HeaderProps> = ({ onOpenForm, onOpenAdmin }) => {
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
-                    onOpenAdmin();
-                  }}
-                  className="px-3 py-2 text-xs text-left text-slate-400 hover:text-white"
-                >
-                  Consultar Inscrições Registradas
-                </button>
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
                     onOpenForm();
                   }}
-                  className="w-full py-3 text-center text-sm font-semibold text-black bg-gradient-to-r from-[#F3E5AB] via-[#E5C07B] to-[#C59F49] rounded-lg shadow-md"
+                  className="w-full py-3 text-center text-sm font-semibold text-black bg-gradient-to-r from-[#F3E5AB] via-[#E5C07B] to-[#C59F49] rounded-lg shadow-md cursor-pointer"
                 >
                   Garantir Vaga no Encontro
                 </button>

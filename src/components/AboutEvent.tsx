@@ -129,7 +129,7 @@ export const AboutEvent: React.FC<AboutEventProps> = ({ onOpenForm }) => {
         {/* Highlight quote banner */}
         <div className="bg-gradient-to-r from-[#141A26] via-[#1A2234] to-[#141A26] border border-[#D4AF37]/25 rounded-2xl p-6 sm:p-8 text-center max-w-4xl mx-auto shadow-2xl">
           <p className="text-base sm:text-xl text-slate-200 font-medium italic mb-4 leading-relaxed font-display">
-            “Não espere uma crise para cuidar do seu casamento. O maior investimento que você pode fazer
+            “Não espere uma crise para cuidar do seu casamento. A maior prioridade que você pode ter
             pela sua família é a solidez e a saúde do seu relacionamento conjugal.”
           </p>
           <div className="text-xs font-semibold text-[#E5C07B] tracking-wider uppercase">

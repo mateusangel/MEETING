@@ -125,10 +125,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenForm, onOpenVideo }) => {
                   <ShieldCheck className="w-3.5 h-3.5 text-[#E5C07B]" />
                   <span>1º Lote Casal</span>
                 </div>
-                <div className="text-base font-bold text-white font-mono tabular-nums">
-                  R$ 990,00
+                <div className="text-sm font-bold text-white">
+                  Experiência Completa
                 </div>
-                <div className="text-[11px] text-slate-400">Até 12x no cartão</div>
+                <div className="text-[11px] text-slate-400">Hospedagem & Gastronomia</div>
               </div>
             </div>
 

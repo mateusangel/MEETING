@@ -91,7 +91,6 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess })
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submittedRecord, setSubmittedRecord] = useState<StoredRegistration | null>(null);
   const [copiedVoucher, setCopiedVoucher] = useState<boolean>(false);
-  const [showEmbeddedGoogleForm, setShowEmbeddedGoogleForm] = useState<boolean>(false);
 
   const steps = [
     { number: 1, title: 'Casal', icon: Users, short: 'Dados Básicos' },
@@ -264,8 +263,69 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess })
 
     let syncSuccess = false;
 
+    // 1. Submit to Fastify / Prisma / Supabase Backend API
     try {
-      // 1. Submit to Google Form response directly
+      await fetch('/api/registrations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          maridoNome: formData.maridoNome,
+          maridoNascimento: formData.maridoNascimento,
+          maridoCelular: formData.maridoCelular,
+          maridoEmail: formData.maridoEmail,
+          maridoRedeSocial: formData.maridoRedeSocial,
+          maridoProfissao: formData.maridoProfissao,
+          maridoMembroIgreja: formData.maridoMembroIgreja === 'SIM',
+          maridoQualIgreja: formData.maridoQualIgreja,
+          maridoAfastado: formData.maridoAfastado === 'SIM',
+          maridoDieta: formData.maridoDieta,
+          maridoPaiNome: formData.maridoPaiNome,
+          maridoMaeNome: formData.maridoMaeNome,
+          maridoPaisTelefones: formData.maridoPaisTelefones,
+
+          esposaNome: formData.esposaNome,
+          esposaNascimento: formData.esposaNascimento,
+          esposaCelular: formData.esposaCelular,
+          esposaEmail: formData.esposaEmail,
+          esposaRedeSocial: formData.esposaRedeSocial,
+          esposaProfissao: formData.esposaProfissao,
+          esposaMembroIgreja: formData.esposaMembroIgreja === 'SIM',
+          esposaQualIgreja: formData.esposaQualIgreja,
+          esposaAfastada: formData.esposaAfastada === 'SIM',
+          esposaDieta: formData.esposaDieta,
+          esposaPaiNome: formData.esposaPaiNome,
+          esposaMaeNome: formData.esposaMaeNome,
+          esposaPaisTelefones: formData.esposaPaisTelefones,
+
+          endereco: formData.endereco,
+          numero: formData.numero,
+          bairro: formData.bairro,
+          cidade: formData.cidade,
+          estado: formData.estado,
+          estadoCivil: formData.estadoCivil,
+          dataCasamento: formData.dataCasamento,
+          fazParteGvc: formData.grupoDeVida === 'SIM',
+          liderGvcNome: formData.liderGVC,
+          liderGvcTelefone: formData.telefoneLiderGVC,
+
+          temFilhos: formData.temFilhos === 'SIM',
+          quantosFilhos: formData.quantosFilhos,
+          filhosDescricao: [formData.filho1, formData.filho2, formData.filho3].filter(Boolean),
+
+          visitaDiaSemana: formData.visitaDiaSemana,
+          visitaHorario: formData.visitaHorario,
+
+          comoSoube: formData.comoSoube,
+          amigoNome: formData.amigoNome,
+          amigoTelefone: formData.amigoTelefone,
+        }),
+      });
+    } catch (apiErr) {
+      console.warn('Fastify API call notice (will rely on direct form and local store):', apiErr);
+    }
+
+    try {
+      // 2. Submit to Google Form response directly
       await fetch(EVENT_DETAILS.googleFormUrl, {
         method: 'POST',
         mode: 'no-cors',
@@ -277,7 +337,6 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess })
       syncSuccess = true;
     } catch (err) {
       console.warn('Form sync via fetch returned:', err);
-      // Fallback: we also save locally and allow manual export/re-sync
     }
 
     // 2. Persist in Local Database / Storage
@@ -338,61 +397,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess })
           </p>
         </div>
 
-        {/* Toggle between Native Integrated Form and Google Forms Embed */}
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <button
-            type="button"
-            onClick={() => setShowEmbeddedGoogleForm(false)}
-            className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
-              !showEmbeddedGoogleForm
-                ? 'bg-[#E5C07B] text-black shadow-sm shadow-[#E5C07B]/30'
-                : 'bg-[#10141D] text-slate-400 hover:text-white border border-white/10'
-            }`}
-          >
-            Formulário Moderno Integrado (Recomendado)
-          </button>
-          <button
-            type="button"
-            onClick={() => setShowEmbeddedGoogleForm(true)}
-            className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
-              showEmbeddedGoogleForm
-                ? 'bg-[#E5C07B] text-black shadow-sm shadow-[#E5C07B]/30'
-                : 'bg-[#10141D] text-slate-400 hover:text-white border border-white/10'
-            }`}
-          >
-            Visualização Direta Google Forms
-          </button>
-        </div>
-
-        {/* Embedded Google Forms alternative if requested */}
-        {showEmbeddedGoogleForm ? (
-          <div className="bg-[#0F1420] border border-white/10 rounded-2xl p-4 sm:p-6 shadow-2xl">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-              <span className="text-xs text-slate-300">
-                Google Form Oficial — 72º Encontro de Casais INVA
-              </span>
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSdqNGkkPI3t3RMG3p52te3z68oAIR5cYRvKf8OOPrJbqpBtbA/viewform"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-[#E5C07B] hover:underline flex items-center gap-1"
-              >
-                <span>Abrir em nova aba</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-            <iframe
-              src="https://docs.google.com/forms/d/e/1FAIpQLSdqNGkkPI3t3RMG3p52te3z68oAIR5cYRvKf8OOPrJbqpBtbA/viewform?embedded=true"
-              width="100%"
-              height="850"
-              frameBorder="0"
-              className="rounded-xl bg-white w-full"
-              title="Google Form 72º Encontro de Casais"
-            >
-              Carregando formulário...
-            </iframe>
-          </div>
-        ) : submittedRecord ? (
+        {submittedRecord ? (
           /* SUCCESS SCREEN */
           <div className="bg-gradient-to-b from-[#141A28] to-[#0D111A] border-2 border-[#D4AF37]/50 rounded-3xl p-6 sm:p-10 shadow-2xl animate-in fade-in duration-300">
             <div className="text-center max-w-xl mx-auto">
@@ -441,29 +446,33 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess })
                 </div>
               </div>
 
-              {/* Step 2: Payment in PagBank */}
-              <div className="bg-[#172033] border border-blue-500/30 rounded-2xl p-6 text-left mb-8 shadow-lg">
-                <div className="flex items-start gap-3.5">
-                  <div className="w-9 h-9 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
-                    <span className="font-bold text-sm">2º</span>
+              {/* Step 2: Unlocked Payment Link */}
+              <div className="bg-gradient-to-r from-[#172033] to-[#121A2A] border-2 border-[#D4AF37] rounded-2xl p-6 sm:p-7 text-left mb-8 shadow-xl shadow-[#D4AF37]/15">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#C59F49] to-[#F3E5AB] text-black flex items-center justify-center shrink-0 mt-0.5 shadow-md">
+                    <span className="text-xl">🔓</span>
                   </div>
-                  <div>
-                    <h4 className="text-base font-bold text-white mb-1">
-                      Último Passo: Realizar o Pagamento no PagBank
+                  <div className="flex-grow">
+                    <span className="text-xs font-bold text-[#E5C07B] uppercase tracking-wider block mb-1">
+                      Etapa Final Desbloqueada
+                    </span>
+                    <h4 className="text-lg sm:text-xl font-black text-white mb-1.5 font-display">
+                      Link Oficial de Pagamento Liberado!
                     </h4>
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
-                      Para garantir a vaga do 1º lote (R$ 990,00), clique no botão abaixo para acessar a Sacola
-                      Oficial do PagBank da INVA. Você poderá parcelar em até 12x no cartão com total segurança.
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-5">
+                      Sua ficha de inscrição foi registrada com sucesso. Agora, acesse a Sacola Oficial
+                      do PagBank da INVA para efetuar o pagamento da vaga do casal (com opção de
+                      parcelamento em até 12x no cartão ou à vista).
                     </p>
 
                     <a
                       href={EVENT_DETAILS.paymentUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-bold text-black bg-gradient-to-r from-[#F3E5AB] via-[#E5C07B] to-[#C59F49] hover:from-white hover:to-[#E5C07B] rounded-xl transition-all shadow-md active:scale-95"
+                      className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 text-sm sm:text-base font-extrabold text-black bg-gradient-to-r from-[#F3E5AB] via-[#E5C07B] to-[#C59F49] hover:from-white hover:to-[#E5C07B] rounded-xl transition-all shadow-xl shadow-[#C59F49]/30 active:scale-95"
                     >
-                      <span>Acessar Sacola de Pagamento PagBank</span>
-                      <ExternalLink className="w-4 h-4" />
+                      <span>Acessar Pagamento no PagBank Agora</span>
+                      <ExternalLink className="w-5 h-5" />
                     </a>
                   </div>
                 </div>
@@ -1449,8 +1458,8 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSuccess })
                         </span>
                       </div>
                       <div>
-                        <span className="text-slate-400">Investimento 1º Lote:</span>{' '}
-                        <strong className="text-[#E5C07B]">R$ 990,00 (Até 12x)</strong>
+                        <span className="text-slate-400">Pacote da Vaga:</span>{' '}
+                        <strong className="text-[#E5C07B]">1º Lote Casal (All-Inclusive)</strong>
                       </div>
                     </div>
                   </div>

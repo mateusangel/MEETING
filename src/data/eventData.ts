@@ -11,10 +11,10 @@ export const EVENT_DETAILS = {
   datesISO: '2027-05-01T08:00:00-03:00',
   venueName: 'Casarão Terra Santa',
   venueLocation: 'Itaboraí — Rio de Janeiro / RJ',
-  investmentText: 'R$ 990,00',
+  investmentText: '1º Lote Aberto',
   investmentCents: 99000,
   batchText: '1º Lote Exclusivo',
-  paymentInfo: 'Esse valor pode ser parcelado em até 12x com juros da maquininha.',
+  paymentInfo: 'A inscrição pode ser parcelada em até 12x no cartão via PagBank.',
   paymentUrl: 'https://sacola.pagbank.com.br/7f90fb8d-0ea8-44f9-b11f-b73ca1e192c6',
   googleFormUrl:
     'https://docs.google.com/forms/d/e/1FAIpQLSdqNGkkPI3t3RMG3p52te3z68oAIR5cYRvKf8OOPrJbqpBtbA/formResponse',
@@ -158,14 +158,14 @@ export const GALLERY_ITEMS: GalleryItem[] = [
 
 export const FAQ_ITEMS: FAQItem[] = [
   {
-    question: 'O que está incluso no valor do 1º Lote (R$ 990,00)?',
+    question: 'O que está incluso na vaga do casal no 1º Lote?',
     answer:
-      'O valor de R$ 990,00 é por CASAL e inclui a estadia completa durante os dois dias no Casarão Terra Santa em Itaboraí/RJ, todas as refeições (café da manhã, almoço, coquetéis e jantar especial), kit do evento, materiais de apoio e participação em todas as palestras, dinâmicas e ministrações.',
+      'A vaga é válida para o CASAL e inclui a estadia completa durante os dois dias no Casarão Terra Santa em Itaboraí/RJ, todas as refeições (café da manhã colonial, almoço com sabor caseiro, coquetéis e o Jantar Romântico de Gala dos Namorados), kit do casal com materiais de apoio e participação em todas as palestras, dinâmicas e ministrações pastorais.',
   },
   {
-    question: 'Como funciona o pagamento parcelado no PagBank?',
+    question: 'Como e quando tenho acesso ao link de pagamento?',
     answer:
-      'Após o preenchimento da ficha de inscrição, você é direcionado diretamente para a Sacola Oficial do PagBank da INVA, onde pode parcelar em até 12x no cartão de crédito (com as taxas da maquininha/PagBank) ou pagar à vista.',
+      'O link oficial de pagamento é liberado imediatamente na tela após o preenchimento da ficha de inscrição. Você poderá parcelar em até 12x no cartão de crédito através da Sacola Oficial do PagBank ou realizar o pagamento à vista.',
   },
   {
     question: 'Quem pode participar do Encontro de Casais?',
